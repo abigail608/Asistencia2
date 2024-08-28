@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Nueva Asignacion Estudiante-Grupo</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <h1>Editar nuevo estudiante</h1>
+  <form th:action="@{/estudianteGrupos/update}" th:object="${estudianteGrupo}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="estudiante">Estudiante:</label>
+          <select id="estudiante" name="estudianteId" class="form-control" required>
+            <option th:each="estudiante : ${estudiantes}"
+                    th:value="${estudiante.id}"
+                    th:text="${estudiante.nombre}">
+            </option>
+          </select>
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="grupo">Grupo:</label>
+          <select id="grupo" name="grupoId" class="form-control" required>
+            <option th:each="grupo : ${grupos}" th:value="${grupo.id}" th:text="${grupo.nombre}"></option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div>
+      <hr>
+      <button type="submit" class="btn btn-primary">Guardar</button> |
+      <a th:href="@{/estudianteGrupos}" class="btn btn-secondary">Regresar</a>
+    </div>
+  </form>
+</div>
+</body>
+</html>

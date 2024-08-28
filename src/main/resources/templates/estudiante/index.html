@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/layouts/_mainLayout">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Listado de Estudiantes</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div th:if="${msg != null}">
+    <script>
+      Swal.fire({
+          title: "Confirmación",
+          text: '[[${msg}]]',
+          icon: "success"
+      });
+    </script>
+  </div>
+  <div th:if="${error != null}">
+    <script>
+      Swal.fire({
+          title: "Error",
+          text: '[[${error}]]',
+          icon: "error"
+      });
+    </script>
+  </div>
+  <h1>Listado de Estudiantes</h1>
+  <a th:href="@{/estudiantes/create}" class="btn btn-outline-primary">Nuevo Estudiante</a>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Pin</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${estudiantes}">
+      <td th:text="${item.id}"></td>
+      <td th:text="${item.nombre}"></td>
+      <td th:text="${item.email}"></td>
+      <td th:text="${item.pin}"></td>
+      <td>
+        <a th:href="@{/estudiantes/details/{id} (id = ${item.id})}" class="btn btn-outline-secondary">Detalles</a>
+        <a th:href="@{/estudiantes/edit/{id} (id = ${item.id})}" class="btn btn-outline-info">Editar</a>
+        <a th:href="@{/estudiantes/remove/{id} (id = ${item.id})}" class="btn btn-outline-danger">Eliminar</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <nav class="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item" th:each="pageNumber : ${pageNumber}">
+        <a class="page-link" th:href="@{|/estudiantes?page=${pageNumber}|}" th:text="${pageNumber}"></a>
+      </li>
+    </ul>
+  </nav>
+</div>
+</body>
+
+</html>
